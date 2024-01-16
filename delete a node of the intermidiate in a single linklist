@@ -1,0 +1,131 @@
+# include <stdio.h>
+# include <stdlib.h>
+struct slinklist
+{
+	int data;
+	struct slinklist *next;
+};
+typedef struct slinklist node;
+node *start = NULL;
+//create one node
+node* getnode()
+{
+	node* newnode;
+	newnode = (node *) malloc(sizeof(node));
+	printf("\n Enter data: "); 
+	scanf("%d",&newnode -> data);
+	newnode -> next = NULL;
+	return newnode;
+}
+
+void traverse()
+		{
+			node *temp;
+			temp = start;
+			printf("\n The contents of List (Left to Right): \n");
+			if(start == NULL)
+				{
+					printf("\n Empty List");
+					return;
+				}
+			else
+			{
+				while(temp != NULL)
+				{
+					printf("%d-->", temp -> data);
+					temp = temp -> next;
+				}
+			}
+			printf("NULL");
+		}
+
+void createlist(int n)
+{
+	int i;
+	node *newnode;
+	node *temp;
+	for(i = 0; i < n; i++)
+		{
+		newnode = getnode();
+		if(start == NULL)
+		{
+			start = newnode;
+		}
+		else
+		{
+			temp = start;
+			while(temp -> next != NULL)
+			temp = temp -> next;
+			temp -> next = newnode;
+		}
+		}
+}
+
+void delete_at_mid()
+{
+	int ctr = 1, pos, nodectr;
+	node *temp, *prev;
+	if(start == NULL)
+	{
+		printf("\n Empty List..");
+		return ;
+	}
+	else
+	{
+		printf("\n Enter position of node to delete: ");
+		scanf("%d", &pos);
+		nodectr = countnode(start);
+		if(pos > nodectr)
+		{
+			printf("\nThis node doesnot exist");
+		}
+		 
+		if(pos > 1 && pos < nodectr)
+		{
+			temp = prev = start;
+			while(ctr < pos)
+			{
+				prev = temp;
+				temp = temp -> next;
+				ctr ++;
+			}
+			prev -> next = temp -> next;
+			free(temp);
+			printf("\n Node deleted..");
+		}
+		else
+		{
+			printf("\n Invalid position..");
+			//
+		}
+	}
+}
+
+int countnode(node *ptr)
+{
+	int count=0;
+	while(ptr != NULL)
+	{
+		count++;
+		ptr = ptr -> next;
+	}
+	return (count);
+}
+
+
+int main()
+{
+    int ch, n;
+    node *Head;
+    if(start == NULL)
+		{
+			printf("\n Number of nodes you want to create: ");
+			scanf("%d", &n);
+			createlist(n);
+			printf("\n List created..");
+			delete_at_mid();
+}
+	else
+			printf("\n List is already created..");
+	traverse();
+}
